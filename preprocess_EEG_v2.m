@@ -67,7 +67,7 @@ t2 = min([a,b]);
 t2 = t2-1;
 trialEnd = str2double(recordingInfo{1}{t2});
 
-load(['preprocessed/sub' subID '_1.mat'], 'masterTime')
+%load(['preprocessed/sub' subID '_1.mat'], 'masterTime')
 if ~exist('masterTime')
     masterTime = makeTimeStamp(recordingInfo);
 end

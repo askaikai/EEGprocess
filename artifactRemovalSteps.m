@@ -44,6 +44,7 @@ comp2remove = input(prompt);
 cfg=[];
 cfg.component = [comp2remove];
 dummy = ft_rejectcomponent(cfg, datacomp);
+save(dataName,'dummy','-append')
 close all
 
 

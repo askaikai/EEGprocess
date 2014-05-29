@@ -108,6 +108,11 @@ elseif size(tmp,1)==1
         MODInfo.endTime = [];
         fprintf('Warning: MOD name is not right. check manually! \n')
     end
+else
+    MODInfo.name = 'MOD';
+        MODInfo.startTime = [];
+        MODInfo.endTime = [];
+        fprintf('Warning: MOD name is not right. check manually! \n')
 end
         
 clear tmp thisEvent    
@@ -148,6 +153,11 @@ elseif size(tmp,1)==1
         HVLT2Info.endTime = [];
         fprintf('Warning: HVLT2 name is not right. check manually! \n')
     end
+else
+    HVLT2Info.name = 'HVLT2';
+        HVLT2Info.startTime = [];
+        HVLT2Info.endTime = [];
+        fprintf('Warning: HVLT2 name is not right. check manually! \n')
 end
         
 clear tmp thisEvent
@@ -188,6 +198,11 @@ elseif size(tmp,1)==1
         DSInfo.endTime = [];
         fprintf('Warning: DS name is not right. check manually! \n')
     end
+else 
+    DSInfo.name = 'DS';
+        DSInfo.startTime = [];
+        DSInfo.endTime = [];
+        fprintf('Warning: DS name is not right. check manually! \n')
 end
 
 clear tmp thisEvent 
@@ -228,6 +243,11 @@ elseif size(tmp,1)==1
         WTARInfo.endTime = [];
         fprintf('Warning: WTAR name is not right. check manually! \n')
     end
+else
+    WTARInfo.name = 'WTAR';
+        WTARInfo.startTime = [];
+        WTARInfo.endTime = [];
+        fprintf('Warning: WTAR name is not right. check manually! \n')
 end
         
 clear tmp thisEvent 
@@ -270,6 +290,11 @@ elseif size(tmp,1)==1
         TMInfo.endTime = [];
         fprintf('Warning: TM name is not right. check manually! \n')
     end
+else 
+     TMInfo.name = 'TM';
+        TMInfo.startTime = [];
+        TMInfo.endTime = [];
+        fprintf('Warning: TM name is not right. check manually! \n')
 end
         
 clear tmp thisEvent
@@ -311,6 +336,11 @@ elseif size(tmp,1)==1
         COWATInfo.endTime = [];
         fprintf('Warning: COWAT name is not right. check manually! \n')
     end
+else 
+    COWATInfo.name = 'COWAT';
+        COWATInfo.startTime = [];
+        COWATInfo.endTime = [];
+        fprintf('Warning: COWAT name is not right. check manually! \n')
 end
 
 clear tmp thisEvent    
@@ -352,6 +382,11 @@ elseif size(tmp,1)==1
         SDMInfo.endTime = [];
         fprintf('Warning: SDM name is not right. check manually! \n')
     end
+else 
+    SDMInfo.name = 'SDM';
+        SDMInfo.startTime = [];
+        SDMInfo.endTime = [];
+        fprintf('Warning: SDM name is not right. check manually! \n')
 end
     
 clear tmp thisEvent
@@ -396,6 +431,12 @@ elseif size(tmp,1)==1
         STInfo.endTime = [];
         fprintf('Warning: ST only end was recorded. check manually! \n')
     end
+else
+    % otherwise, manually check
+        STInfo.name = 'ST';
+        STInfo.startTime = [];
+        STInfo.endTime = [];
+        fprintf('Warning: ST only end was recorded. check manually! \n')
 end
 
 clear tmp thisEvent
@@ -459,6 +500,13 @@ elseif size(tmp,1)==2
         HVLT1Info.endTime = [];
         fprintf('Warning: HVLT1 is not right. check event name manually! \n')
     end
+else
+    %%%% do something here when you encounter this 
+    
+    HVLT1Info.name = 'HVLT1';
+    HVLT1Info.startTime = [];
+    HVLT1Info.endTime = [];
+    fprintf('Warning: HVLT1 is not right. check event name manually! \n')
         
 end
 
@@ -503,7 +551,7 @@ elseif size(tmp,1)==2 % if both start & end were recorded
         baselineInfo.startTime = tmp(1,2);
         baselineInfo.endTime = tmp(2,2); 
     end
-else % if there is 0, or more than 2 baseline entries
+else
     fprintf('Warning: baseline info is either missing or more than 2. check manually! \n')
     baselineInfo.name = 'Baseline';
     baselineInfo.startTime = [];
