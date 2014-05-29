@@ -541,7 +541,7 @@ if size(tmp,1)<2 % if either only start or end was recorded
    end
    
 elseif size(tmp,1)==2 % if both start & end were recorded
-    if abs(abs(tmp(2,2)-tmp(1,2))-660) > 60 % if start to end duration was longer than 11min, or shorter than 9min 
+    if abs(abs(tmp(2,2)-tmp(1,2))-600) > 60 % if start to end duration was longer than 11min, or shorter than 9min 
         fprintf('Warning: baseline duration is not right. check the duration manually! \n')
         baselineInfo.name = 'Baseline';
         baselineInfo.startTime = [];

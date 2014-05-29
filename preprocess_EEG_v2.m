@@ -2,13 +2,13 @@ function preprocess_EEG_v2(subNum, sessionNum)
 
 % this fxn reads in EEG data as one long continuous data to prepare for
 % the artifact removal steps.
-% 
+%
 % preprocess steps
 % 1. preprocess_EEG_v2 (this)
 % 2. artifactRemovalSteps
 % 3. splitCleanFile
 %
-% overall road map is based on: 
+% overall road map is based on:
 % http://mailman.science.ru.nl/pipermail/fieldtrip/2010-March/002703.html
 %
 % inputs:
@@ -70,6 +70,15 @@ trialEnd = str2double(recordingInfo{1}{t2});
 %load(['preprocessed/sub' subID '_1.mat'], 'masterTime')
 if ~exist('masterTime')
     masterTime = makeTimeStamp(recordingInfo);
+end
+
+resp='n';
+while strcmp(resp, 'n')
+    prompt = 'OK to move on? (y)es/(n)o: ';
+    resp = input(prompt,'s');
+    if strcmp(resp, 'n')
+        masterTime = correctTimeStamp(masterTime);    
+    end
 end
 
 data = data(:,1:(masterTime(10).endTime+10)*SF);
