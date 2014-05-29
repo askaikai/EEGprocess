@@ -66,24 +66,26 @@ try
         
         if isempty(ft_data.trial)
             fprintf('no %s trials for sub %d\n', masterTime(i).name, subNum)
+            ft_data_chopped = ft_data;
+        else
+            
+            % chop data into the uniform length trials
+            cfg=[];
+            cfg.length=minDur;
+            cfg.overlap=0;
+            ft_data_chopped = ft_redefinetrial(cfg, ft_data);
+            for k=1:length(ft_data_chopped.time)
+                ft_data_chopped.time{k}=ft_data_chopped.time{k}-ft_data_chopped.time{k}(1);
+            end
+            
+            % save with experiment name
+            outData = [masterTime(i).name '.mat'];
+            save(outData, 'ft_data','ft_data_chopped')
+            clear ft_data
         end
-        
-        % chop data into the uniform length trials
-        cfg=[];
-        cfg.length=minDur;
-        cfg.overlap=0;
-        ft_data_chopped = ft_redefinetrial(cfg, ft_data);
-        for k=1:length(ft_data_chopped.time)
-            ft_data_chopped.time{k}=ft_data_chopped.time{k}-ft_data_chopped.time{k}(1);
-        end
-        
-        % save with experiment name
-        outData = [masterTime(i).name '.mat'];
-        save(outData, 'ft_data','ft_data_chopped')
-        clear ft_data
     end
 catch
     fprintf('problem at %s, trial %d\n',masterTime(i).name, j)
-    dbstop if error
+    
 end
 

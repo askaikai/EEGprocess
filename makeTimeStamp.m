@@ -416,6 +416,12 @@ if size(tmp,1)>=2
         STInfo.name = 'ST';
         STInfo.startTime = tmp(1,2);
         STInfo.endTime = str2num(eventTime{find(eventIndex{4},1)});
+    else
+    % otherwise, manually check
+        STInfo.name = 'ST';
+        STInfo.startTime = [];
+        STInfo.endTime = [];
+        fprintf('Warning: ST only end was recorded. check manually! \n')
     end
 elseif size(tmp,1)==1
     if event{tmp(1,1)}(1)=='S' && (tmp(1,2) < str2num(eventTime{find(eventIndex{4},1)}))
@@ -426,6 +432,12 @@ elseif size(tmp,1)==1
         STInfo.endTime = str2num(eventTime{find(eventIndex{4},1)});
     elseif event{tmp(1,1)}(1)=='E' 
         % if only the end was recorded
+        STInfo.name = 'ST';
+        STInfo.startTime = [];
+        STInfo.endTime = [];
+        fprintf('Warning: ST only end was recorded. check manually! \n')
+        else
+    % otherwise, manually check
         STInfo.name = 'ST';
         STInfo.startTime = [];
         STInfo.endTime = [];
