@@ -526,8 +526,7 @@ elseif size(tmp,1)==2
         HVLT1Info.name = 'HVLT1';
         HVLT1Info.startTime = tmp(1,2);
         HVLT1Info.endTime = tmp(2,2);
-    elseif (event{tmp(1,1)}(1)=='S'|| event{tmp(1,1)}(1)=='s') && ...
-            (event{tmp(2,1)}(1)=='S'||event{tmp(2,1)}(1)=='s') % only the start of HVLT1 & HVLT-recall have been recorded
+    elseif (event{tmp(1,1)}(1)=='S'|| ) && event{tmp(2,1)}(1)=='S' % only the start of HVLT1 & HVLT-recall have been recorded
         if strcmp(event{find(eventIndex{3},1)},'SST') % if next entry is Start of ST, use that time as the end time
             HVLT1Info.name = 'HVLT1';
             HVLT1Info.startTime = tmp(1,2);

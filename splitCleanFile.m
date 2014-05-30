@@ -68,7 +68,6 @@ try
             fprintf('no %s trials for sub %d\n', masterTime(i).name, subNum)
             ft_data_chopped = ft_data;
         else
-            
             % chop data into the uniform length trials
             cfg=[];
             cfg.length=minDur;
@@ -77,6 +76,9 @@ try
             for k=1:length(ft_data_chopped.time)
                 ft_data_chopped.time{k}=ft_data_chopped.time{k}-ft_data_chopped.time{k}(1);
             end
+            
+            ft_data.trialinfo = ones(length(ft_data.trial),1)*subNum;
+            ft_data_chopped.trialinfo = ones(length(ft_data_chopped.trial),1)*subNum;
             
             % save with experiment name
             outData = [masterTime(i).name '.mat'];

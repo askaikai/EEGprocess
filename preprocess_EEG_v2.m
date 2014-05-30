@@ -74,6 +74,9 @@ end
 
 resp='n';
 while strcmp(resp, 'n')
+    for i = 1:length(masterTime)
+        masterTime(i)
+    end
     prompt = 'OK to move on? (y)es/(n)o: ';
     resp = input(prompt,'s');
     if strcmp(resp, 'n')

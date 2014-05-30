@@ -29,6 +29,8 @@ AES_EEG_06072012
 6. compare_tasks: runs permutation t-test to compare tasks. creates stat maps  
 
 ### Notes
+* raw data (in raw data folder) should be named: "EEG011.edf" and "EEG011.lay". first 2 digits are sub number, and the last digit is the session number.
+
 * before the analysis, you need to specify path to fieldtrip and EEGprocess (this) folder. so, do something like:      
 ```{r}
 cd /Users/akiko/Experiments/WendyEEG/AES_EEG_06072012/
