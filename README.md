@@ -6,7 +6,7 @@ series of code used to analyze EEG data. mostly using Fiedtrip on Matlab.
 written by: Akiko Ikkai
 
 
-### Directory Structure
+### Data Directory Structure
 AES_EEG_06072012  
 	preprocessed  
 		subxx  
@@ -27,6 +27,7 @@ AES_EEG_06072012
 4. TFR_hanning: performs time-frequency analysis  
 5. makeGA: creates grand-average of power across subjects  
 6. compare_tasks: runs permutation t-test to compare tasks. creates stat maps  
+7. ft_classify_EEG_allchan: runs classification between trial types at each electrode. run this function at individual level, and perform permutation t-test  
 
 ### Notes
 * raw data (in raw data folder) should be named: "EEG011.edf" and "EEG011.lay". first 2 digits are sub number, and the last digit is the session number.

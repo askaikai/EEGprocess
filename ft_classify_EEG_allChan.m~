@@ -6,7 +6,7 @@ function ft_classify_EEG_allChan(cond1, cond2, testFreq, testTime, mtmcycle)
 % study/preprocessed/subxx/TFR)
 % after running this fxn for all subjects, create GA, and run group-level 
 % permutation t-test (against chance = .5) to deterine subset of electrode
-% that dissociate trial types
+% that dissociate t
 %
 % inputs:
 % cond1: string. name of the condition in a single quote (e.g. 'item')
