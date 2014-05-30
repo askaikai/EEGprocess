@@ -9,14 +9,14 @@ written by: Akiko Ikkai
 ### Data Directory Structure
 AES_EEG_06072012  
     - preprocessed  
-        - subxx  
-            - TFR  
-                - highFreq  
-                - lowFreq  
+        ** subxx  
+            *** TFR  
+                **** highFreq  
+                **** lowFreq  
     - rawdata  
     - TFR  
-        - highFreq  
-        - lowFreq  
+        ** highFreq  
+        ** lowFreq  
 
 ### Analysis Steps
 1. preprocess_EEG_v2: reads in EDF and lay files from the recording session to organize into analyzable format. see notes below    
