@@ -56,16 +56,16 @@ recordingInfo = readLay(['rawdata/EEG' subID sessionID '.lay']);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % extract time-stamp info from lay data & trim EEG data is neccessary
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-t1 = find(strcmp(recordingInfo{1},'[Comments]'));
-t1 = t1 + 1;
-trialStart = str2double(recordingInfo{1}{t1});
-
-a = find(strcmp(recordingInfo{1},'[ZDiag]'));
-b = find(strcmp(recordingInfo{1},'[Interpolation]'));
-t2 = min([a,b]);
-%t2 = find(strcmp(recordingInfo{1},'[ZDiag]'));
-t2 = t2-1;
-trialEnd = str2double(recordingInfo{1}{t2});
+% t1 = find(strcmp(recordingInfo{1},'[Comments]'));
+% t1 = t1 + 1;
+% trialStart = str2double(recordingInfo{1}{t1});
+% 
+% a = find(strcmp(recordingInfo{1},'[ZDiag]'));
+% b = find(strcmp(recordingInfo{1},'[Interpolation]'));
+% t2 = min([a,b]);
+% %t2 = find(strcmp(recordingInfo{1},'[ZDiag]'));
+% t2 = t2-1;
+% trialEnd = str2double(recordingInfo{1}{t2});
 
 %load(['preprocessed/sub' subID '_1.mat'], 'masterTime')
 if ~exist('masterTime')
