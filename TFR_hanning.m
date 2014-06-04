@@ -57,7 +57,7 @@ if testFreq(1) < 30 % low freq
     cfg.toi             = [0:.1:ft_data.time{trl}(end)]; 
     cfg.foi             = testFreq;  % [1:0.5:30]
     cfg.t_ftimwin       = zeros(1,length(cfg.foi));
-    cfg.t_ftimwin(:)    = windowsize./cfg.foi; % at alpha (testFreq)
+    cfg.t_ftimwin(:)    = windowsize./cfg.foi;
     cfg.taper           = 'hanning';
     cfg.keeptrials      = 'yes';
     cfg.pad             = 'maxperlen';
