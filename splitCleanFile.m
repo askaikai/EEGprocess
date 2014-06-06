@@ -1,4 +1,4 @@
-function splitCleanFile(subNum, sessionNum, minDur)
+function splitCleanFile(studyDir, subNum, sessionNum, minDur)
 
 % step 3 of the EEG preprocessing for AES.
 % this fxn selects trials that are longer than minimum length (e.g. 5sec),
@@ -12,6 +12,7 @@ function splitCleanFile(subNum, sessionNum, minDur)
 % 3. splitCleanFile (this)
 %
 % inputs:
+% studyDir: string. path to the study dir, (e.g. '/user/Experiment/studyDir') 
 % subNum: double. unique sub ID (e.g. 1)
 % sessionNum: double. unique session ID that's in the file name.
 % minDur: double: minimumn duration in seconds that will be included in the
@@ -20,6 +21,10 @@ function splitCleanFile(subNum, sessionNum, minDur)
 % history
 % 05/15/14 ai wrote it
 % 05/19/14 ai added chopping process using ft_redefinetrials
+% 06/06/14 ai modified to accomodate directory change
+
+global topDir
+topDir = studyDir;
 
 if subNum < 10
     subID = ['0' num2str(subNum)];
@@ -30,7 +35,7 @@ end
 sessionID = num2str(sessionNum);
 
 
-cd(['~/Experiments/WendyEEG/AES_EEG_06072012/preprocessed/sub' subID])
+cd([topDir '/preprocessed/sub' subID])
 pwd
 warning off
 

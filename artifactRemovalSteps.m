@@ -1,19 +1,26 @@
-function artifactRemovalSteps
+function artifactRemovalSteps(studyDir)
 
 % these are steps to follow to remove artifact (eye movements and muscle
 % artifacts) in continuous data. You need to run it line by line.
 % output is segmented time-series that are artifact-free
 %
-% 
 % preprocess steps
 % 1. preprocess_EEG_v2 
 % 2. artifactRemovalSteps (this)
 % 3. splitCleanFile
 %
+% inputs:
+% studyDir: string. path to the study dir, (e.g. '/user/Experiment/studyDir')
+%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % set directory & parameters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global topDir
+topDir = studyDir;
+
+cd(topDir)
+
 cfg = [];
 cfg.method = 'initSub';
 out = artifactRemoveStep(cfg);

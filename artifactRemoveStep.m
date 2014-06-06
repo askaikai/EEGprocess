@@ -30,10 +30,12 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function out = initSub
 
+global topDir
+
 prompt = 'Enter subject number: ';
 subNum = input(prompt);
 
-cd ~/Experiments/WendyEEG/AES_EEG_06072012/preprocessed/
+cd([topDir '/preprocessed/'])
 warning off
 
 if subNum < 10
