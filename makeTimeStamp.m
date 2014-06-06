@@ -14,9 +14,18 @@ trialNames = {'aseline','HVLT','ST','SDM','COWAT','TM','WTAR','DS','HVLT delay',
 
 % find start/end point of each experiment
 for i = 1:length(trialNames)
-    tmp = strfind(event,trialNames{i});
-    eventIndex{i} = zeros(1,length(tmp));
-    eventIndex{i}(~isemptycell(tmp))=cell2num(tmp(~isemptycell(tmp)));
+    t=regexpi(event, trialNames{i});
+    tmp=0;
+    for k= 1:length(t)
+        if ~isempty(t{k})
+            tmp(k)=k;
+        end
+    end
+    eventIndex{i} = tmp;
+    
+%     tmp = strfind(event,trialNames{i});
+%     eventIndex{i} = zeros(1,length(tmp));
+%     eventIndex{i}(~isemptycell(tmp))=cell2num(tmp(~isemptycell(tmp)));
     clear tmp
 end
 
