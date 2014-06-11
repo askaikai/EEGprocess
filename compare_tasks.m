@@ -117,3 +117,5 @@ else
     cfg.marker = 'off';
     ft_topoplotTFR(cfg,stat)
 end
+
+close all
