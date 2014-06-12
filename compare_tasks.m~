@@ -41,20 +41,20 @@ end
 
 save(file2bsaved, 'TMI')
 
-% % first, plot the raw average TMI
-% cfg = [];
-% cfg.keepindividual = 'no';
-% GA = ft_freqgrandaverage(cfg, TMI{:});
-% GA.elec = TMI{1}.elec;
-% 
-% cfg = [];
-% cfg.zparam = 'powspctrm';
-% cfg.xlim = timeTarget;
-% cfg.zlim = [-1 1];
-% cfg.ylim = freqTarget;
-% cfg.interactive     = 'yes';
-% cfg.colorbar = 'yes';
-% figure; ft_topoplotTFR(cfg, GA);
+% first, plot the raw average TMI
+cfg = [];
+cfg.keepindividual = 'no';
+GA = ft_freqgrandaverage(cfg, TMI{:});
+GA.elec = TMI{1}.elec;
+
+cfg = [];
+cfg.zparam = 'powspctrm';
+cfg.xlim = timeTarget;
+cfg.zlim = [-1 1];
+cfg.ylim = freqTarget;
+cfg.interactive     = 'yes';
+cfg.colorbar = 'yes';
+figure; ft_topoplotTFR(cfg, GA);
 
 % prepare for t-test
 null = TMI;
@@ -124,8 +124,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [Task1, Task2] = selectIntersectSub(Task1, Task2)
 
-% in order to run dependent-sample T-test, we have to make sure to analyze
-% only those who have data in both trial types.
+% in order to run within-sub, between sub
 
 task1Sub = [];
 task2Sub = [];
