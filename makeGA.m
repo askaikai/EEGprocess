@@ -7,7 +7,7 @@ function makeGA(topDir, freq, subNum)
 % topDir: string. path to the study directory (e.g '/Volumes/Data/AES_EEG_06072012/')
 % freq: string. either "low" (~30Hz) or "high" (30+Hz) that corresponds to
 % individual's TFR that was processed with TFR_hanning
-% subNum: 1xN array of subject numbers to be GAed. (e.g. [1:3, 6,10])
+% subNum: 1xN array of subject numbers to be GAed. (e.g. [1:80])
 %
 % history
 % 05/20/14: ai wrote it

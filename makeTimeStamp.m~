@@ -634,45 +634,45 @@ function baselineInfo = getBaselineInfo(eventIndex, eventTime, event)
 thisEvent = eventIndex{1};
 tmp = zeros(length(find(thisEvent)));
 try
-    tmp(:,1) = find(thisEvent);
-    for i = 1:size(tmp,1)
-        tmp(i,2) = str2num(eventTime{tmp(i,1)});
-    end
-    
-    % there must be 2 entries, approx 600 sec apart
-    if size(tmp,1)<2 % if either only start or end was recorded
-        if event{tmp(1,1)}(1)=='S' || event{tmp(1,1)}(1)=='s' % only start of the baseline was recorded
-            baselineInfo.name = 'Baseline';
-            baselineInfo.startTime = tmp(1,2);
-            baselineInfo.endTime = tmp(1,2)+600; % 10 min of baseline
-        elseif event{tmp(1,1)}(1)=='E' || event{tmp(1,1)}(1)=='e'% only start of the baseline was recorded
-            baselineInfo.event = 'Baseline';
-            baselineInfo.event.startTime = tmp(1,2)-600; % 10 min of baseline
-            baselineInfo.event.endTime = tmp(1,2);
-        else
-            baselineInfo.name = 'Baseline';
-            baselineInfo.startTime = [];
-            baselineInfo.endTime = [];
-            fprintf('Warning: baseline naming is not right. check event name manually! \n')
-        end
-        
-    elseif size(tmp,1)==2 % if both start & end were recorded
-        if abs(abs(tmp(2,2)-tmp(1,2))-600) > 60 % if start to end duration was longer than 11min, or shorter than 9min
-            fprintf('Warning: baseline duration is not right. check the duration manually! \n')
-            baselineInfo.name = 'Baseline';
-            baselineInfo.startTime = [];
-            baselineInfo.endTime = [];
-        else
-            baselineInfo.name = 'Baseline';
-            baselineInfo.startTime = tmp(1,2);
-            baselineInfo.endTime = tmp(2,2);
-        end
-    else
-        fprintf('Warning: baseline info is either missing or more than 2. check manually! \n')
+tmp(:,1) = find(thisEvent);
+for i = 1:size(tmp,1)
+    tmp(i,2) = str2num(eventTime{tmp(i,1)});
+end
+
+% there must be 2 entries, approx 600 sec apart
+if size(tmp,1)<2 % if either only start or end was recorded
+   if event{tmp(1,1)}(1)=='S' || event{tmp(1,1)}(1)=='s' % only start of the baseline was recorded
+       baselineInfo.name = 'Baseline';
+       baselineInfo.startTime = tmp(1,2);
+       baselineInfo.endTime = tmp(1,2)+600; % 10 min of baseline
+   elseif event{tmp(1,1)}(1)=='E' || event{tmp(1,1)}(1)=='e'% only start of the baseline was recorded
+       baselineInfo.event = 'Baseline';
+       baselineInfo.event.startTime = tmp(1,2)-600; % 10 min of baseline
+       baselineInfo.event.endTime = tmp(1,2); 
+   else
+       baselineInfo.name = 'Baseline';
+       baselineInfo.startTime = [];
+       baselineInfo.endTime = [];
+       fprintf('Warning: baseline naming is not right. check event name manually! \n')
+   end
+   
+elseif size(tmp,1)==2 % if both start & end were recorded
+    if abs(abs(tmp(2,2)-tmp(1,2))-600) > 60 % if start to end duration was longer than 11min, or shorter than 9min 
+        fprintf('Warning: baseline duration is not right. check the duration manually! \n')
         baselineInfo.name = 'Baseline';
         baselineInfo.startTime = [];
         baselineInfo.endTime = [];
+    else
+        baselineInfo.name = 'Baseline';
+        baselineInfo.startTime = tmp(1,2);
+        baselineInfo.endTime = tmp(2,2); 
     end
+else
+    fprintf('Warning: baseline info is either missing or more than 2. check manually! \n')
+    baselineInfo.name = 'Baseline';
+    baselineInfo.startTime = [];
+    baselineInfo.endTime = [];
+end
 catch
     fprintf('Warning: baseline info is either missing or more than 2. check manually! \n')
     baselineInfo.name = 'Baseline';
