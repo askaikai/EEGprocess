@@ -19,7 +19,7 @@ AES_EEG_06072012
         ** lowFreq  
 
 ### Analysis Steps
-1. preprocess_EEG_v2: reads in EDF and lay files from the recording session to organize into analyzable format. see notes below    
+1. preprocess_EEG_v2: reads in EDF and lay files from the recording session to organize into analyzable format. see notes below. after this step, run _rawDataViewer_ to inspect data quality    
 2. artifactRemovalStep: runs eye-movement/blink removal, jump and muscle artifact removal. requires manual inputs, checking and adjustment for each subject    
 3. splitCleanFile: epochs artifact-free data into segments of uniform duration  
 4. TFR_hanning: performs time-frequency analysis  
