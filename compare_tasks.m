@@ -1,4 +1,4 @@
-function compare_tasks(task1, task2, timeTarget, freqTarget)
+function compare_tasks(studyDir, task1, task2, timeTarget, freqTarget)
 
 % this fxn runs a few ways to visualize difference between tasks. first, it
 % simply averages TMI. second, it runs between-trial t-stats to identify
@@ -35,6 +35,9 @@ Task2=load([task2 '_GA.mat']);
 TMI=Task1.TFRdesc;
 
 for i=1:length(TMI)
+    Task1.TFRdesc{i} = standardizeElec(studyDir, Task1.TFRdesc{i});
+    Task2.TFRdesc{i} = standardizeElec(studyDir, Task2.TFRdesc{i});
+    
     TMI{i}.powspctrm = (Task1.TFRdesc{i}.powspctrm - Task2.TFRdesc{i}.powspctrm)./(Task1.TFRdesc{i}.powspctrm + Task2.TFRdesc{i}.powspctrm);
     TMI{i}.elec=Task1.TFRdesc{i}.elec;
 end

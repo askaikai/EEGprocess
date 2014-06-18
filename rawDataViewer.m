@@ -10,6 +10,8 @@ warning off
 
 [FileName,PathName,FilterIndex] = uigetfile('*.mat','Select a folder that contains the raw data...');
 load([PathName FileName], 'ft_data');
+fprintf('opening %s... \n', FileName);
+ft_data.label % print to the consol since cfg.plotlabel may not work
 
 global selectionOn
 selectionOn = 1;
@@ -27,7 +29,9 @@ while selectionOn
     cfg.channel = ft_data.label(elec2view);
     cfg.layout = ft_data.elec;
     cfg.viewmode = 'vertical';
-    cfg.plotlabels = 'yes';
+    cfg.plotlabels = 'yes'; % apparently this option does not work with 
+                            % Matlab version newer than R2012b
+    cfg.blocksize = 5;
     data2 = ft_databrowser(cfg, ft_data);
     
     selectionOn = repeatSelectionGUI;
