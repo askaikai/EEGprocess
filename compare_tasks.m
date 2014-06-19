@@ -39,25 +39,29 @@ for i=1:length(TMI)
     Task2.TFRdesc{i} = standardizeElec(studyDir, Task2.TFRdesc{i});
     
     TMI{i}.powspctrm = (Task1.TFRdesc{i}.powspctrm - Task2.TFRdesc{i}.powspctrm)./(Task1.TFRdesc{i}.powspctrm + Task2.TFRdesc{i}.powspctrm);
-    TMI{i}.elec=Task1.TFRdesc{i}.elec;
+    TMI{i} = standardizeElec(studyDir, TMI{i});
+    
+    if sum(~isnan(TMI{i}.powspctrm)) == 0
+        fprintf('%dth sub is all NaN! \n', i)
+    end
 end
 
 save(file2bsaved, 'TMI')
 
-% % first, plot the raw average TMI
-% cfg = [];
-% cfg.keepindividual = 'no';
-% GA = ft_freqgrandaverage(cfg, TMI{:});
-% GA.elec = TMI{1}.elec;
-% 
-% cfg = [];
-% cfg.zparam = 'powspctrm';
-% cfg.xlim = timeTarget;
-% cfg.zlim = [-1 1];
-% cfg.ylim = freqTarget;
-% cfg.interactive     = 'yes';
-% cfg.colorbar = 'yes';
-% figure; ft_topoplotTFR(cfg, GA);
+% first, plot the raw average TMI
+cfg = [];
+cfg.keepindividual = 'no';
+GA = ft_freqgrandaverage(cfg, TMI{:});
+GA.elec = TMI{1}.elec;
+
+cfg = [];
+cfg.zparam = 'powspctrm';
+cfg.xlim = timeTarget;
+cfg.zlim = [-1 1];
+cfg.ylim = freqTarget;
+cfg.interactive     = 'yes';
+cfg.colorbar = 'yes';
+figure; ft_topoplotTFR(cfg, GA);
 
 % prepare for t-test
 null = TMI;

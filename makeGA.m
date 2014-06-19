@@ -42,7 +42,7 @@ for j=1:length(task)
             count = count + 1;
             
             cfg=[];
-            cfg.jackknife     = 'yes';
+            %cfg.jackknife     = 'yes';
             cfg.variance = 'yes';
             TFRdesc{count} = ft_freqdescriptives(cfg, TFR);
             TFRdesc{count}.elec = TFR.elec;
