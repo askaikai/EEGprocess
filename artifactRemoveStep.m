@@ -7,6 +7,9 @@ elseif strcmp(cfg.method, 'run_ICA')
     ft_data = cfg.ft_data;
     dataName = cfg.dataName;
     out = run_ICA(ft_data, dataName);
+
+elseif strcmp(cfg.method, 'visualize_ICA')    
+    visualizeICA(cfg);
     
 elseif strcmp(cfg.method, 'visualize_artifact')
     datacomp = cfg.datacomp;
@@ -69,8 +72,10 @@ save(dataName, 'datacomp','-append')
 
 out.datacomp = datacomp;
 
-%%% visualize ICA components. Take note on which trials contain blink
-%%% and/or eye movements
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function visualizeICA(cfg)
+datacomp = cfg.data;
+
 figure
 k=1; f=1;
 row = 4;
@@ -97,6 +102,7 @@ cfg = [];
 cfg.channel = datacomp.label(comp2view); % components to be plotted
 cfg.layout = datacomp.elec;
 cfg.viewmode = 'vertical';
+cfg.blocksize = 5;
 artifact_eye = ft_databrowser(cfg, datacomp);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

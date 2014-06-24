@@ -40,9 +40,10 @@ pwd
 warning off
 
 dataName = ['../sub' subID '_' sessionID '.mat'];
-load(dataName, 'data_clean','masterTime')
+load(dataName,'masterTime')
+dataName = (['../sub' subID '_' sessionID '_woMuscleArtRemoval.mat']);
+load(dataName,'data_clean')
 
-%trlNum.dataset = 0;
 try
     for i=1:length(masterTime)
         

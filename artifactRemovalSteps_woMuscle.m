@@ -1,12 +1,12 @@
-function artifactRemovalSteps(studyDir)
+function artifactRemovalSteps_woMuscle(studyDir)
 
 % these are steps to follow to remove artifact (eye movements and muscle
 % artifacts) in continuous data. You need to run it line by line.
 % output is segmented time-series that are artifact-free
 %
 % preprocess steps
-% 1. preprocess_EEG_v2 
-% 2. artifactRemovalSteps (this)
+% 1. preprocess_EEG_v2
+% 2. artifactRemovalSteps(_woMuscle) (this)
 % 3. splitCleanFile
 %
 % inputs:
@@ -30,35 +30,38 @@ masterTime = out.masterTime;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EOG: ICA
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cfg = [];
-cfg.method = 'run_ICA';
-cfg.ft_data = out.ft_data;
-cfg.dataName = dataName;
-out = artifactRemoveStep(cfg);
-datacomp = out.datacomp;
 
-cfg = [];
-cfg.data = datacomp;
-cfg.method = 'visualize_ICA';
-artifactRemoveStep(cfg);
+content = who('-file', dataName);
+if ~any(ismember(content, 'dummy'))
+    load(dataName)
+    
+    cfg = [];
+    cfg.data = datacomp;
+    cfg.method = 'visualize_ICA';
+    artifactRemoveStep(cfg);
+    
+    prompt = 'componets to look at ([xxx]): ';
+    comp2view = input(prompt);
+    cfg = [];
+    cfg.method = 'visualize_artifact';
+    cfg.comp2view = comp2view;
+    cfg.datacomp = datacomp;
+    artifactRemoveStep(cfg);
+    
+    
+    prompt = 'componets to remove ([xxx]): ';
+    comp2remove = input(prompt);
+    cfg=[];
+    cfg.component = [comp2remove];
+    dummy = ft_rejectcomponent(cfg, datacomp);
+    save(dataName,'dummy','-append')
+    close all
+else
+    load(dataName,'dummy','datacomp')
+end
 
-prompt = 'componets to look at ([xxx]): ';
-comp2view = input(prompt);
-cfg = [];
-cfg.method = 'visualize_artifact';
-cfg.comp2view = comp2view;
-cfg.datacomp = datacomp;
-artifactRemoveStep(cfg);
-
-
-prompt = 'componets to remove ([xxx]): ';
-comp2remove = input(prompt);
-cfg=[];
-cfg.component = [comp2remove];
-dummy = ft_rejectcomponent(cfg, datacomp);
-save(dataName,'dummy','-append')
-close all
-
+namePiece  = tokenize(dataName,'.','rep');
+dataName = ['..' namePiece{1} '_woMuscleArtRemoval.mat'];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % jump artifact. Just save the time points for now
@@ -72,16 +75,16 @@ cfg_jump = out.cfg_jump;
 artifact_jump = out.artifact_jump;
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% muscle artifact. Just save the time points for now
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cfg = [];
-cfg.method = 'muscleArtifact';
-cfg.dummy = dummy;
-out = artifactRemoveStep(cfg);
-
-cfg_muscle = out.cfg_muscle;
-artifact_muscle = out.artifact_muscle;
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % muscle artifact. Just save the time points for now
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% cfg = [];
+% cfg.method = 'muscleArtifact';
+% cfg.dummy = dummy;
+% out = artifactRemoveStep(cfg);
+%
+% cfg_muscle = out.cfg_muscle;
+% artifact_muscle = out.artifact_muscle;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -100,13 +103,13 @@ d1.label = dummy.label;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % now reject artifact
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cfg=[]; 
+cfg=[];
 cfg.artfctdef.reject = 'partial';
 cfg.artfctdef.jump.artifact = artifact_jump;
-cfg.artfctdef.muscle.artifact = artifact_muscle;
+%cfg.artfctdef.muscle.artifact = artifact_muscle;
 data_clean = ft_rejectartifact(cfg,d1);
 data_clean.elec = datacomp.elec;
 
-save(dataName,'data_clean','-append')
+save(dataName,'data_clean')
 
 
