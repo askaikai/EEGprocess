@@ -13,7 +13,7 @@ end
 
 sessionID = num2str(sessionNum);
 
-outData = ['sub' subID '_' sessionID '.mat'];
+outData = ['sub' subID '_' sessionID '_woMuscleArtRemoval.mat'];
 cd([topDir '/preprocessed'])
 load(['sub' subID '_' sessionID '.mat'],'masterTime')
 
@@ -30,6 +30,7 @@ STend = find(strcmp(recordingInfo{1},num2str(masterTime(3).endTime)));
 
 sSpe = regexpi(recordingInfo{5}(STstart:STend), 'sspe');
 eSpe = regexpi(recordingInfo{5}(STstart:STend), 'espe');
+ 
 
 
     

@@ -43,21 +43,13 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function plotStats(stat)
 
-if (isfield(stat,'posclusters') && ~isempty(stat.posclusters) && stat.posclusters(1).prob <= .2) || ...
-        (isfield(stat,'negclusters') && ~isempty(stat.negclusters) && stat.negclusters(1).prob <= .2)
-    % plot (if there is sig cluster to plots)
-    cfg = [];
-    cfg.alpha  = 0.2;
-    cfg.zparam = 'stat';
-    cfg.zlim   = [-3 3];
-    cfg.colorbar = 'yes';
-    ft_clusterplot(cfg, stat);
-else
-    figure;
-    cfg = [];
-    cfg.zparam = 'stat';
-    cfg.zlim   = [-3 3];
-    cfg.colorbar = 'yes';
-    cfg.marker = 'off';
-    ft_topoplotTFR(cfg,stat)
-end
+cfg = [];
+cfg.highlight = 'on';
+cfg.highlightchannel = find(stat.mask);
+cfg.highlightsize      = 12;
+cfg.comment   = 'no';
+cfg.zparam = 'stat';
+cfg.zlim   = [-3 3];
+cfg.colorbar = 'yes';
+figure; ft_topoplotER(cfg, stat)
+title(['stat map of ' task1 'vs. ' task2 ': montecarlo-corrected'])
