@@ -14,8 +14,6 @@ sessionID = num2str(sessionNum);
 
 outData = ['sub' subID '_' sessionID '_woMuscleArtRemoval.mat'];
 cd([topDir '/preprocessed'])
-
-% load masterTime with ST (no STcong/incong)
 load(['sub' subID '_' sessionID '.mat'],'masterTime')
 
 
@@ -23,6 +21,7 @@ load(['sub' subID '_' sessionID '.mat'],'masterTime')
 % read in lay file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 recordingInfo = readLay([topDir '/rawdata/EEG' subID sessionID '.lay']);
+
 
 % identify when ST started and ended
 STstart = find(strcmp(recordingInfo{1},num2str(masterTime(3).startTime)));
@@ -76,7 +75,7 @@ else
 end
 
 masterTime(end+1:end+3) = [STCong1Info, STCong2Info, STIncongInfo];
-masterTime(3)=[];
+
 
 resp='n';
 while strcmp(resp, 'n')
@@ -90,15 +89,16 @@ while strcmp(resp, 'n')
     end
 end
 
+masterTime(3)=[];
 save(outData, 'masterTime','-append')
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % catch up with artifact rejection (assume jump artifacts already identified
 
-load(['sub' subID '_' sessionID '.mat'],'dummy','datacomp')
+load(['sub' subID '_' sessionID '.mat'],'dummy')
 load(outData, 'data_clean')
-data_clean_wST = data_clean;
+
 
 for i = 1:length(masterTime)
     start = (masterTime(i).startTime)*dummy.fsample;
@@ -112,11 +112,9 @@ d1.label = dummy.label;
 
 cfg=[];
 cfg.artfctdef.reject = 'partial';
-cfg.artfctdef.jump.artifact = data_clean.cfg.artfctdef.jump.artifact;
+cfg.artfctdef.jump.artifact = data_clean.cfg.artfctdef;
 data_clean = ft_rejectartifact(cfg,d1);
 data_clean.elec = datacomp.elec;
-
-save(outData,'data_clean_wST','data_clean','-append')
 
 
 

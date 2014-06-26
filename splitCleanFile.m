@@ -12,7 +12,7 @@ function splitCleanFile(studyDir, subNum, sessionNum, minDur)
 % 3. splitCleanFile (this)
 %
 % inputs:
-% studyDir: string. path to the study dir, (e.g. '/user/Experiment/studyDir') 
+% studyDir: string. path to the study dir, (e.g. '/Volumes/Data/AES_EEG_06072012/') 
 % subNum: double. unique sub ID (e.g. 1)
 % sessionNum: double. unique session ID that's in the file name.
 % minDur: double: minimumn duration in seconds that will be included in the
@@ -39,10 +39,10 @@ cd([topDir '/preprocessed/sub' subID])
 pwd
 warning off
 
-dataName = ['../sub' subID '_' sessionID '.mat'];
-load(dataName,'masterTime')
+%dataName = ['../sub' subID '_' sessionID '.mat'];
+%load(dataName,'masterTime')
 dataName = (['../sub' subID '_' sessionID '_woMuscleArtRemoval.mat']);
-load(dataName,'data_clean')
+load(dataName,'data_clean','masterTime')
 
 try
     for i=1:length(masterTime)
