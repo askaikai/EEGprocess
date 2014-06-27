@@ -1,12 +1,13 @@
 function artifactRemovalSteps_woMuscle(studyDir)
 
-% these are steps to follow to remove artifact (eye movements and muscle
-% artifacts) in continuous data. You need to run it line by line.
+% these are steps to follow to remove artifact (eye movements and jump
+% artifacts) in continuous data.
 % output is segmented time-series that are artifact-free
 %
 % preprocess steps
 % 1. preprocess_EEG_v2
 % 2. artifactRemovalSteps(_woMuscle) (this)
+% 2.1 addSTCongAndIncong
 % 3. splitCleanFile
 %
 % inputs:
