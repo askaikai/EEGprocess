@@ -44,7 +44,7 @@ for i=1:length(TMI)
     TMI{i}.powspctrm = (Task1.TFRdesc{i}.powspctrm - Task2.TFRdesc{i}.powspctrm)./(Task1.TFRdesc{i}.powspctrm + Task2.TFRdesc{i}.powspctrm);
     TMI{i} = standardizeElec(studyDir, TMI{i});
     
-    if sum(~isnan(TMI{i}.powspctrm)) == 0
+    if sum(sum(sum(~isnan(TMI{i}.powspctrm(:,:,:)),1),2),3) == 0
         fprintf('%dth sub is all NaN! \n', i)
     end
 end
@@ -134,7 +134,7 @@ cfg.zparam = 'stat';
 cfg.zlim   = [-3 3];
 cfg.colorbar = 'yes';
 figure; ft_topoplotER(cfg, stat)
-title(['stat map of ' task1 'vs. ' task2 ': montecarlo-corrected'])
+title(['stat map of ' task1 ' vs. ' task2 ': montecarlo-corrected'])
 
 % if (isfield(stat,'posclusters') && ~isempty(stat.posclusters) && stat.posclusters(1).prob <= .2) || ...
 %         (isfield(stat,'negclusters') && ~isempty(stat.negclusters) && stat.negclusters(1).prob <= .2)

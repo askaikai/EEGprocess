@@ -27,7 +27,7 @@ warning off
 cd([topDir 'TFR/' freq 'Freq'])
 pwd
 
-load([topDir 'preprocessed/sub01_1.mat'],'masterTime')
+load([topDir 'preprocessed/sub01_1_woMuscleArtRemoval.mat'],'masterTime')
 for i=1:length(masterTime)
     task{i}=masterTime(i).name;
 end

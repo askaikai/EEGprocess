@@ -82,7 +82,10 @@ if israw
     
     for i = 1:length(dataIn.trial)
         dataIn.trial{i} = dataIn.trial{i}(elecsel,:);
-    end
+        
+        
+    
+    
 end
 
 % other data type: need to grow this fxn as the need comes up

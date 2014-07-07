@@ -177,8 +177,8 @@ save(outData, 'masterTime','-append')
 % catch up with artifact rejection (assume jump artifacts already identified
 
 load(['sub' subID '_' sessionID '.mat'],'dummy','datacomp')
-load(outData, 'data_clean_wST')
-data_clean_wST_wTM = data_clean_wST;
+load(outData, 'data_clean')
+data_clean_wST_wTM = data_clean;
 
 for i = 1:length(masterTime)
     start = (masterTime(i).startTime)*dummy.fsample;
@@ -192,7 +192,7 @@ d1.label = dummy.label;
 
 cfg=[];
 cfg.artfctdef.reject = 'partial';
-cfg.artfctdef.jump.artifact = data_clean_wST.cfg.artfctdef.jump.artifact;
+cfg.artfctdef.jump.artifact = data_clean.cfg.artfctdef.jump.artifact;
 data_clean = ft_rejectartifact(cfg,d1);
 data_clean.elec = datacomp.elec;
 
