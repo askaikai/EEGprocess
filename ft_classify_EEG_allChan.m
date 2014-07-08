@@ -123,6 +123,7 @@ for chan=1:size(T1.ft_data_chopped.label,1)
     
     stat=ft_freqstatistics(cfg, TFRcond1, TFRcond2);
     out.powspctrm(chan,1,1)=stat.statistic.accuracy;
+    out.binomial(chan,1,1)=stat.statistic.binomial;
 end
 
 ft_data = out;
@@ -131,6 +132,7 @@ ft_data.elec = T1.ft_data_chopped.elec;
 cfg = [];
 cfg.colorbar = 'yes';
 cfg.zlim = [.3 .7];
+figure;
 ft_topoplotTFR(cfg, ft_data);
 title(['sub' subID '_' cond1 'vs' cond2])
 
