@@ -1,6 +1,6 @@
 function [stat, badSub] = runGroupStatsClassification(topDir, subNum, task1, task2, freqTarget, method)
 
-% this fxn runs one-sample t-test against chance on classification data.
+% this fxn runs stats on classification data.
 % input data are data from ft_classify_EEG_allchan
 %
 % inputs
@@ -92,8 +92,8 @@ switch method
         
     case 'binomial'
         alpha = .05;
-        stat = test1(allSub, alpha);
-        zlim = [-.3 .7];
+        stat = run_binomial(allSub, alpha);
+        zlim = [.3 .7];
 end
 stat.elec = allSub{1}.elec;
 stat.elec.pos=stat.elec.chanpos;
