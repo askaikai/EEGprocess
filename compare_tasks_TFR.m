@@ -7,6 +7,7 @@ function compare_tasks_TFR(studyDir, task1, task2, timeTarget, freqTarget)
 % (e.g. studyDir/TFR/lowFreq)
 %
 % inputs:
+% studyDir: string. study directory (e.g. '/Volumes/Data/AES_EEG_06072012/')
 % task1: string. name of a task. if comparing with baseline, this is the
 %   "task" (e.g. 'HVLT1')
 % task2: string. name of a task. if comparing with baseline, this is the
@@ -21,6 +22,7 @@ function compare_tasks_TFR(studyDir, task1, task2, timeTarget, freqTarget)
 % 06/25/14: ai changed to Montecarlo to correct for multiple comparison
 % instead os cluster statistics (neighbors are too far & some electrodes
 % are too noisy)
+% 08/05/14: ai cleaned up 
 
 warning off
 
