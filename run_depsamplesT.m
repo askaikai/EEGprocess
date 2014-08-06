@@ -31,15 +31,15 @@ cfg.ivar     = 2;
 [stat] = ft_freqstatistics(cfg, data1{:}, data2{:});
 stat.elec = data1{1}.elec;
 stat.elec.pos=stat.elec.chanpos;
-save(file2bsaved, 'stat', '-append')
+%save(file2bsaved, 'stat', '-append')
 
-cfg = [];
-cfg.highlight = 'on';
-cfg.highlightchannel = find(stat.mask);
-cfg.highlightsize      = 12;
-cfg.comment   = 'no';
-cfg.zparam = 'stat';
-cfg.zlim   = [-3 3];
-cfg.colorbar = 'yes';
-figure; ft_topoplotER(cfg, stat)
-title(['stat map of ' task1 ' vs. ' task2 ': montecarlo-corrected'])
+% cfg = [];
+% cfg.highlight = 'on';
+% cfg.highlightchannel = find(stat.mask);
+% cfg.highlightsize      = 12;
+% cfg.comment   = 'no';
+% cfg.zparam = 'stat';
+% cfg.zlim   = [-3 3];
+% cfg.colorbar = 'yes';
+% figure; ft_topoplotER(cfg, stat)
+% title(['stat map of ' task1 ' vs. ' task2 ': montecarlo-corrected'])
