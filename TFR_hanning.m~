@@ -1,4 +1,4 @@
-function TFR_hanning(studyDir, trialType, testFreq, windowsize)
+function TFR_hanning(trialType, testFreq, windowsize)
 
 % this fxn reads in preprocessed individual sub's EEG data and runs
 % time-frquency analysis.
@@ -10,13 +10,11 @@ function TFR_hanning(studyDir, trialType, testFreq, windowsize)
 % stored either in "TFR/lowFreq" or "TFR/highFreq" folder.
 %
 % inputs:
-% studyDir: string. path to a directory where preprocessed data are stored
-% (e.g. /Volumes/Data/AES_EEG_06072012/preprocessed_pre/sub03)ß
 % trialType: string. name of the condition to analyze (e.g. 'Baseline');
 % testFreq: 1xN double array. specify freq range of interest (e.g. [1:.5:30]
 %    [30:5:125];) 
 % windowsize: double. how many of that freq cycle should be fit? best is 3
-%   for low freq, and .25 for high freq (fixed window = .25sec)
+%   for low freq, and .25 for high freq
 %
 % history
 % 07/26/13: ai wrote it for ItemRel_temporalExtend (based on original

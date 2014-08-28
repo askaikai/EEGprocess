@@ -8,7 +8,7 @@ function makeGA(topDir, freq, subNum, outName)
 % freq: string. either "low" (~30Hz) or "high" (30+Hz) that corresponds to
 % individual's TFR that was processed with TFR_hanning
 % subNum: 1xN array of subject numbers to be GAed. (e.g. [1:80])
-% outName: string. Indicate which group data belongs to.
+% outName: string. Indicate which group data belongs to. 
 %   'preE' pre-intervention, Exercise
 %   'preC' pre-intervention, Control
 %   'postE' post-intervention, Exercise
@@ -32,24 +32,19 @@ warning off
 cd([topDir 'TFR/' freq 'Freq'])
 pwd
 
-load([topDir 'preprocessed_pre/sub01_1_woMuscleArtRemoval.mat'],'masterTime')
+load([topDir 'preprocessed/sub01_1_woMuscleArtRemoval.mat'],'masterTime')
 for i=1:length(masterTime)
     task{i}=masterTime(i).name;
 end
 
 %%% now loop through subs to get descriptive stats
-if strfind(outName,'pre')
-    phase = 'pre';
-elseif strfind(outName,'post')
-    phase = 'post';
-end
 
 for j=1:length(task)
     count = 0;
     for i=1:length(sub)
-        
+        if 
         try
-            load([topDir,'preprocessed_' phase '/sub' sub{i} '/TFR/' freq 'Freq/' task{j} '_TFR.mat'],'TFR')
+            load([topDir,'preprocessed/sub' sub{i} '/TFR/' freq 'Freq/' task{j} '_TFR.mat'],'TFR')
             count = count + 1;
             
             cfg=[];

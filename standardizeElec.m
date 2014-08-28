@@ -6,7 +6,7 @@ function dataOut = standardizeElec(studyDir, dataIn)
 % accordingly.
 
 %studyDir = '/Volumes/Data/AES_EEG_06072012/';
-load([studyDir 'preprocessed/sub01_1.mat'],'ft_data');
+load([studyDir 'preprocessed_pre/sub01_1.mat'],'ft_data');
 standardLabel = ft_data.elec.label;
 clear ft_data
 
