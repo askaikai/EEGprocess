@@ -1,29 +1,40 @@
-function eRITE_cohere_stats(refchan, cond1, cond2, band)
+function runCohereStats(studyDir, phase, subNum, refchan, cond1, cond2, band)
 
 % this function first calculates coherence (specfied in 'cfg.method') for
-% each of conditions, tranforms coherence to arctangent, and finalyy runs
-% cluster permutation analysis between conditions.
+% each of conditions, tranforms coherence to arctangent, and finaly runs
+% dependent sample T-test, corrected for multiple comparisons.
 % this is written for EEGItemRel
 % 
 % inputs
+% studyDir: string. study directory (e.g. '/Volumes/Data/AES_EEG_06072012/')
+% phase: string. Either 'pre' or 'post' to specify whether the data came
+% from pre- or post-intervention, respectively
+% subNum: 1xN array of doubles to specify subjects to analyze
 % refchan: string. Name of a reference electrode (e.g. 'RD7';
 %   LC3/RA2/LL11/RD7)
-% cond1: string. Name of one of the conditions (e.g. 'item';)
-% cond2: string. Name of the other condition (e.g. 'rel';)
+% cond1: string. Name of one of the conditions (e.g. 'STIncong';)
+% cond2: string. Name of the other condition (e.g. 'Baseline';)
 % band: string. Either 'alpha' or 'gamma'. Adjust accordingly
 %
 % history
-% sometime in 2013: ai wrote it for the original EEGItemRel
-% sometime in 2014: Kara edited for the second round of EEGItemRel study
+% 09/01/2014: ai copied from eRITE_cohere_stats
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 warning off
 
-type2bsaved = ['plv_' band '_' cond1 '_' cond2 '_ref' refchan '.mat'];
+for i=1:length(subNum)
+    if subNum(i) < 10
+        subID = ['0' num2str(subNum(i))];
+    else
+        subID = num2str(subNum(i));
+    end
+    sub{i} = subID;
+end
 
-%addpath(genpath('/Users/akiko/matlab/fieldtrip-20120103/'))
-subID = {'01','02', '03', '04', '05', '06', '08', '11', '12', '16', '17', '18', '19', '22', '23', '24', '25', '27'}; % excluded Ps who lost >30% of trials
+type2bsaved = ['plv_' band '_' phase cond1 '_' phase cond2 '_ref' refchan '.mat'];
+
+%subID = {'01','02', '03', '04', '05', '06', '08', '11', '12', '16', '17', '18', '19', '22', '23', '24', '25', '27'}; % excluded Ps who lost >30% of trials
 %subID = {'01'};
-studyDir = ['/Volumes/KaraData2T/eRITE/'];
+%studyDir = ['/Volumes/KaraData2T/eRITE/'];
 testTime = [4.2 5.7];
 
 if(strcmp(band, 'alpha'))
@@ -50,7 +61,7 @@ for m = 1:length(subID)
     cfg.detrend         = 'no';
     cfg.output          = 'fourier';
     cfg.method          = 'mtmconvol';
-    cfg.toi             = [-2:0.1:9]; 
+    cfg.toi             = [.4:0.1:4.6]; 
     cfg.foi             = [1:0.5:30];
     cfg.t_ftimwin       = zeros(1,length(cfg.foi));
     cfg.t_ftimwin(:)    = 5./cfg.foi; % at alpha (testFreq)
@@ -78,7 +89,7 @@ for m = 1:length(subID)
     
     cohdiff{m} = coh1;
     cohnull{m} = coh1;
-     cohdiff{m}.plvspctrm = ((atanh(coh1.plvspctrm)-1/(2*nTaper1-2))-(atanh(coh2.plvspctrm)-1/(2*nTaper2-2))) / ...
+    cohdiff{m}.plvspctrm = ((atanh(coh1.plvspctrm)-1/(2*nTaper1-2))-(atanh(coh2.plvspctrm)-1/(2*nTaper2-2))) / ...
          sqrt((1/(2*nTaper1-2))+(1/(2*nTaper2-2))); 
     %cohdiff{m}.cohspctrm = atanh(coh1.cohspctrm)- atanh(coh2.cohspctrm);    
     cohnull{m}.plvspctrm(:) = 0;

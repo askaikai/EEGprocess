@@ -13,8 +13,7 @@ function eRITE_cohere_stats(refchan, cond1, cond2, band)
 % band: string. Either 'alpha' or 'gamma'. Adjust accordingly
 %
 % history
-% sometime in 2013: ai wrote it for the original EEGItemRel
-% sometime in 2014: Kara edited for the second round of EEGItemRel study
+% somet
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 warning off
 
