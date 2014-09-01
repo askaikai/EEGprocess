@@ -98,29 +98,70 @@ for m = 1:length(subID)
     coh2.powspctrm = coh2.plvspctrm;
     coh2 = rmfield(coh2, 'plvspctrm');
     
-    cohdiff{m} = coh1;
-    cohnull{m} = coh1;
+%     cohdiff{m} = coh1;
+%     cohnull{m} = coh1;
 %     cohdiff{m}.plvspctrm = ((atanh(coh1.plvspctrm)-1/(2*nTaper1-2))-(atanh(coh2.plvspctrm)-1/(2*nTaper2-2))) / ...
 %         sqrt((1/(2*nTaper1-2))+(1/(2*nTaper2-2)));
-    cohdiff{m}.powspctrm = atanh(coh1.powspctrm)- atanh(coh2.powspctrm);
-    cohnull{m}.powspctrm(:) = 0;
+%     %cohdiff{m}.cohspctrm = atanh(coh1.cohspctrm)- atanh(coh2.cohspctrm);
+%     cohnull{m}.plvspctrm(:) = 0;
     
     clear *data *freq item*
+    d1{m} = coh1;
+    d2{m} = coh2;
 end
 
-save(file2bsaved,'cohdiff', 'cohnull');
+save(file2bsaved,'d1', 'd2');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% run group stats
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-freqIn = cohdiff{1}.freq;
+freqIn = d1{1}.freq;
 [xxx, array_position(1)] = min(abs(freqIn - freqTarget(1)));
 [xxx, array_position(2)] = min(abs(freqIn - freqTarget(2)));
 
+% warning off
+% cfg = [];
+% cfg.latency          = [4.2 5.7];
+% cfg.avgovertime      = 'yes';
+% cfg.avgoverfreq      = 'yes';
+% cfg.frequency        = [freqIn(array_position(1)), freqIn(array_position(2))];
+% cfg.method           = 'montecarlo';
+% cfg.statistic        = 'depsamplesT';
+% cfg.parameter        = 'cohspctrm';
+% cfg.correctm         = 'cluster';
+% cfg.clusterstatistic = 'maxsum';
+% %cfg.channel          = '-RA2';
+% cfg.minnbchan        = 0;
+% cfg.tail             = 0;
+% cfg.clustertail      = 0;
+% cfg.clusteralpha     = 0.05; % control admission to a cluster
+% cfg.alpha            = 0.05; % FA
+% cfg.numrandomization = 100;
+% cfg_neighb.method    = 'distance';
+% cfg.neighbours       = ft_prepare_neighbours(cfg_neighb, cohnull{1});
+% 
+% subj = length(cohdiff);
+% design = zeros(2,2*subj);
+% for i = 1:subj
+%     design(1,i) = i;
+% end
+% for i = 1:subj
+%     design(1,subj+i) = i;
+% end
+% design(2,1:subj)        = 1;
+% design(2,subj+1:2*subj) = 2;
+% 
+% cfg.design   = design;
+% cfg.uvar     = 1;
+% cfg.ivar     = 2;
+% 
+% [stat] = ft_freqstatistics(cfg, cohdiff{:}, cohnull{:});
+% stat.elec = cohnull{1}.elec;
+
 freqTarget = [freqIn(array_position(1)), freqIn(array_position(2))];
 tTarget = [timeTarget(1), timeTarget(end)];
-stat = run_depsamplesT(cohdiff, cohnull, tTarget, freqTarget);
-stat.elec = cohdiff{1}.elec;
+stat = run_depsamplesT(d1, d2, tTarget, freqTarget);
+stat.elec = d1{1}.elec;
 stat.elec.pos=stat.elec.chanpos;
 stat.dimord = 'chan';
 save(file2bsaved, 'stat', '-append')
@@ -144,4 +185,4 @@ cfg.zparam = 'stat';
 cfg.zlim   = [-3 3];
 cfg.colorbar = 'yes';
 figure; ft_topoplotER(cfg, stat)
-title(['stat map of ' cond1 ' vs. ' cond2 ': montecarlo-corrected'])
+title(['stat map of ' con1 ' vs. ' cond2 ': montecarlo-corrected'])
