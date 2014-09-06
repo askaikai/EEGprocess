@@ -57,14 +57,16 @@ for j=1:length(task)
             cfg.variance = 'yes';
             TFRdesc{count} = ft_freqdescriptives(cfg, TFR);
             TFRdesc{count}.elec = TFR.elec;
-            TFRdesc{count}.cfg.subNum = i;
+            TFRdesc{count}.cfg.subNum = subNum(i);
+            
         catch
             fprintf('no %s for sub %s. skipping... \n', task{j}, sub{i})
         end
     end
-    
-    outname = [outName '_' task{j} '_GA.mat'];
-    save(outname, 'TFRdesc')
-    clear TFRdesc
+    if exist('TFRdesc') && ~isempty(TFRdesc)
+        outname = [outName '_' task{j} '_GA.mat'];
+        save(outname, 'TFRdesc')
+        clear TFRdesc
+    end
 end
 

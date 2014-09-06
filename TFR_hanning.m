@@ -11,7 +11,7 @@ function TFR_hanning(studyDir, trialType, testFreq, windowsize)
 %
 % inputs:
 % studyDir: string. path to a directory where preprocessed data are stored
-% (e.g. /Volumes/Data/AES_EEG_06072012/preprocessed_pre/sub03)ß
+% (e.g. /Volumes/Data/AES_EEG_06072012/preprocessed_pre/sub03)
 % trialType: string. name of the condition to analyze (e.g. 'Baseline');
 % testFreq: 1xN double array. specify freq range of interest (e.g. [1:.5:30]
 %    [30:5:125];) 
